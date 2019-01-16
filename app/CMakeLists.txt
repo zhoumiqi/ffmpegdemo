@@ -1,0 +1,146 @@
+# For more information about using CMake with Android Studio, read the
+# documentation: https://d.android.com/studio/projects/add-native-code.html
+
+# Sets the minimum version of CMake required to build the native library.
+
+cmake_minimum_required(VERSION 3.4.1)
+
+# Creates and names a library, sets it as either STATIC
+# or SHARED, and provides the relative paths to its source code.
+# You can define multiple libraries, and CMake builds them for you.
+# Gradle automatically packages shared libraries with your APK.
+
+add_library( # Sets the name of the library.
+        myffmpeg
+
+        # Sets the library as a shared library.
+        SHARED
+
+        # Provides a relative path to your source file(s).
+        src/main/cpp/myffmpeg.cpp
+        )
+
+# Searches for a specified prebuilt library and stores the path as a
+# variable. Because CMake includes system libraries in the search path by
+# default, you only need to specify the name of the public NDK library
+# you want to add. CMake verifies that the library exists before
+# completing its build.
+
+
+set(distribution_DIR ../../../../libs)
+
+add_library(libavutil
+        SHARED
+        IMPORTED)
+add_library(libswresample
+        SHARED
+        IMPORTED)
+add_library(libavcodec
+        SHARED
+        IMPORTED)
+add_library(libavfilter
+        SHARED
+        IMPORTED)
+add_library(libswscale
+        SHARED
+        IMPORTED)
+add_library(libavdevice
+        SHARED
+        IMPORTED)
+add_library(libavformat
+        SHARED
+        IMPORTED)
+add_library(libyuv
+        SHARED
+        IMPORTED)
+if (${ANDROID_ABI} STREQUAL "armeabi-v7a")
+    set_target_properties(libavutil
+            PROPERTIES IMPORTED_LOCATION
+            ${distribution_DIR}/armeabi-v7a/libavutil.so)
+
+    set_target_properties(libswresample
+            PROPERTIES IMPORTED_LOCATION
+            ${distribution_DIR}/armeabi-v7a/libswresample.so)
+
+    set_target_properties(libavcodec
+            PROPERTIES IMPORTED_LOCATION
+            ${distribution_DIR}/armeabi-v7a/libavcodec.so)
+
+    set_target_properties(libavfilter
+            PROPERTIES IMPORTED_LOCATION
+            ${distribution_DIR}/armeabi-v7a/libavfilter.so)
+
+    set_target_properties(libswscale
+            PROPERTIES IMPORTED_LOCATION
+            ${distribution_DIR}/armeabi-v7a/libswscale.so)
+
+    set_target_properties(libavdevice
+            PROPERTIES IMPORTED_LOCATION
+            ${distribution_DIR}/armeabi-v7a/libavdevice.so)
+
+    set_target_properties(libavformat
+            PROPERTIES IMPORTED_LOCATION
+            ${distribution_DIR}/armeabi-v7a/libavformat.so)
+
+    set_target_properties(libyuv
+            PROPERTIES IMPORTED_LOCATION
+            ${distribution_DIR}/armeabi-v7a/libyuv.so)
+endif (${ANDROID_ABI} STREQUAL "armeabi-v7a")
+
+#if(${ANDROID_ABI} STREQUAL "arm64-v8a")
+#    set_target_properties( libavutil-56
+#            PROPERTIES IMPORTED_LOCATION
+#            ${distribution_DIR}/arm64-v8a/libavutil-56.so)
+#
+#    set_target_properties( libswresample-3
+#            PROPERTIES IMPORTED_LOCATION
+#            ${distribution_DIR}/arm64-v8a/libswresample-3.so)
+#
+#    set_target_properties( libavcodec-58
+#            PROPERTIES IMPORTED_LOCATION
+#            ${distribution_DIR}/arm64-v8a/libavcodec-58.so)
+#
+#    set_target_properties( libavfilter-7
+#            PROPERTIES IMPORTED_LOCATION
+#            ${distribution_DIR}/arm64-v8a/libavfilter-7.so)
+#
+#    set_target_properties( libswscale-5
+#            PROPERTIES IMPORTED_LOCATION
+#            ${distribution_DIR}/arm64-v8a/libswscale-5.so)
+#
+#    set_target_properties( libavdevice-58
+#            PROPERTIES IMPORTED_LOCATION
+#            ${distribution_DIR}/arm64-v8a/libavdevice-58.so)
+#
+#    set_target_properties( libavformat-58
+#            PROPERTIES IMPORTED_LOCATION
+#            ${distribution_DIR}/arm64-v8a/libavformat-58.so)
+#endif(${ANDROID_ABI} STREQUAL "arm64-v8a")
+
+include_directories(libs/include)
+
+find_library( # Sets the name of the path variable.
+        log-lib
+
+        # Specifies the name of the NDK library that
+        # you want CMake to locate.
+        log)
+
+# Specifies libraries CMake should link to your target library. You
+# can link multiple libraries, such as libraries you define in this
+# build script, prebuilt third-party libraries, or system libraries.
+
+target_link_libraries( # Specifies the target library.
+        myffmpeg
+        libavcodec
+        libavdevice
+        libavfilter
+        libavformat
+        libavutil
+        libswresample
+        libswscale
+        libyuv
+        android
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib})
