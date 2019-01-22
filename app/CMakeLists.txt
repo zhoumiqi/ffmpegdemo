@@ -53,39 +53,39 @@ add_library(libavformat
 add_library(libyuv
         SHARED
         IMPORTED)
-if (${ANDROID_ABI} STREQUAL "armeabi-v7a")
-    set_target_properties(libavutil
-            PROPERTIES IMPORTED_LOCATION
-            ${distribution_DIR}/armeabi-v7a/libavutil.so)
+#if (${ANDROID_ABI} STREQUAL "armeabi-v7a")
+set_target_properties(libavutil
+        PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/${ANDROID_ABI}/libavutil.so)
 
-    set_target_properties(libswresample
-            PROPERTIES IMPORTED_LOCATION
-            ${distribution_DIR}/armeabi-v7a/libswresample.so)
+set_target_properties(libswresample
+        PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/${ANDROID_ABI}/libswresample.so)
 
-    set_target_properties(libavcodec
-            PROPERTIES IMPORTED_LOCATION
-            ${distribution_DIR}/armeabi-v7a/libavcodec.so)
+set_target_properties(libavcodec
+        PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/${ANDROID_ABI}/libavcodec.so)
 
-    set_target_properties(libavfilter
-            PROPERTIES IMPORTED_LOCATION
-            ${distribution_DIR}/armeabi-v7a/libavfilter.so)
+set_target_properties(libavfilter
+        PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/${ANDROID_ABI}/libavfilter.so)
 
-    set_target_properties(libswscale
-            PROPERTIES IMPORTED_LOCATION
-            ${distribution_DIR}/armeabi-v7a/libswscale.so)
+set_target_properties(libswscale
+        PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/${ANDROID_ABI}/libswscale.so)
 
-    set_target_properties(libavdevice
-            PROPERTIES IMPORTED_LOCATION
-            ${distribution_DIR}/armeabi-v7a/libavdevice.so)
+set_target_properties(libavdevice
+        PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/${ANDROID_ABI}/libavdevice.so)
 
-    set_target_properties(libavformat
-            PROPERTIES IMPORTED_LOCATION
-            ${distribution_DIR}/armeabi-v7a/libavformat.so)
+set_target_properties(libavformat
+        PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/${ANDROID_ABI}/libavformat.so)
 
-    set_target_properties(libyuv
-            PROPERTIES IMPORTED_LOCATION
-            ${distribution_DIR}/armeabi-v7a/libyuv.so)
-endif (${ANDROID_ABI} STREQUAL "armeabi-v7a")
+set_target_properties(libyuv
+        PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/${ANDROID_ABI}/libyuv.so)
+#endif (${ANDROID_ABI} STREQUAL "armeabi-v7a")
 
 #if(${ANDROID_ABI} STREQUAL "arm64-v8a")
 #    set_target_properties( libavutil-56
@@ -139,7 +139,9 @@ target_link_libraries( # Specifies the target library.
         libavutil
         libswresample
         libswscale
+        #加入视频格式转换开源库
         libyuv
+        #加入native_window所依赖的系统库android，否则出现找不到引用的错误
         android
         # Links the target library to the log library
         # included in the NDK.
