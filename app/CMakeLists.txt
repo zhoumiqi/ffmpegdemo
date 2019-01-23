@@ -87,35 +87,6 @@ set_target_properties(libyuv
         ${distribution_DIR}/${ANDROID_ABI}/libyuv.so)
 #endif (${ANDROID_ABI} STREQUAL "armeabi-v7a")
 
-#if(${ANDROID_ABI} STREQUAL "arm64-v8a")
-#    set_target_properties( libavutil-56
-#            PROPERTIES IMPORTED_LOCATION
-#            ${distribution_DIR}/arm64-v8a/libavutil-56.so)
-#
-#    set_target_properties( libswresample-3
-#            PROPERTIES IMPORTED_LOCATION
-#            ${distribution_DIR}/arm64-v8a/libswresample-3.so)
-#
-#    set_target_properties( libavcodec-58
-#            PROPERTIES IMPORTED_LOCATION
-#            ${distribution_DIR}/arm64-v8a/libavcodec-58.so)
-#
-#    set_target_properties( libavfilter-7
-#            PROPERTIES IMPORTED_LOCATION
-#            ${distribution_DIR}/arm64-v8a/libavfilter-7.so)
-#
-#    set_target_properties( libswscale-5
-#            PROPERTIES IMPORTED_LOCATION
-#            ${distribution_DIR}/arm64-v8a/libswscale-5.so)
-#
-#    set_target_properties( libavdevice-58
-#            PROPERTIES IMPORTED_LOCATION
-#            ${distribution_DIR}/arm64-v8a/libavdevice-58.so)
-#
-#    set_target_properties( libavformat-58
-#            PROPERTIES IMPORTED_LOCATION
-#            ${distribution_DIR}/arm64-v8a/libavformat-58.so)
-#endif(${ANDROID_ABI} STREQUAL "arm64-v8a")
 
 include_directories(libs/include)
 
