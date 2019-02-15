@@ -5,6 +5,7 @@
 #include "android/native_window.h"
 #include "android/native_window_jni.h"
 #include "unistd.h"
+#include "pthread.h"
 
 #define LOGI(FORMAT, ...) __android_log_print(ANDROID_LOG_INFO,"zmq",FORMAT,##__VA_ARGS__);
 #define LOGE(FORMAT, ...) __android_log_print(ANDROID_LOG_ERROR,"zmq",FORMAT,##__VA_ARGS__);
@@ -632,3 +633,24 @@ Java_com_demo_ffmpeg_VideoPlayer_destroy(JNIEnv *env, jclass jclazz) {
     }
 }
 
+void* t_func(void* args){
+    char* arg=(char*)args;
+    int i=0;
+    for (; i < 5 ; i++) {
+        LOGE("线程%s,%d",arg,i);
+        if(i==4){
+            pthread_exit((void*)1);
+        }
+        sleep(1);
+    }
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_demo_ffmpeg_PosixUtils_createPosixThread(JNIEnv *env, jclass jcls) {
+    //每个线程对应的JNIEnv是不一样的
+    //通过JNIENV获取JavaVM
+    pthread_t tid;
+    pthread_create(&tid, nullptr, t_func, (void *)"NO.1");
+
+
+}

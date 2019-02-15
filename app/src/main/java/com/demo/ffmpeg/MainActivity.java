@@ -57,4 +57,9 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         VideoPlayer.destroy();
     }
+
+    public void createPosixThread(View view) {
+        //创建posix多线程
+        PosixUtils.createPosixThread();
+    }
 }

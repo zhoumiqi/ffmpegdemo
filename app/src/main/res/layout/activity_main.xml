@@ -54,6 +54,12 @@
             android:onClick="stop"
             android:text="结束"
             />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="createPosixThread"
+            android:text="创建Posix多线程"
+            />
 
     </LinearLayout>
 
